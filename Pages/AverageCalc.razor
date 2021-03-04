@@ -1,0 +1,35 @@
+@page "/average"
+
+<h1>Average Calculator</h1>
+
+<p><input @bind="input1" /> Current value: @input1</p>
+<p><input @bind="input2" /> Current value: @input2</p>
+<p><input @bind="input3" /> Current value: @input3</p>
+
+@{
+    var list = new List<int> { input1, input2, input3 };
+}
+
+<p>Average of numbers: @average</p>
+
+<button class="btn btn-primary" @onclick="() => CalculateAverage(list)">Calculate avg</button>
+
+
+
+@code {
+    private float average = 0;
+    private static int input1;
+    private static int input2;
+    private static int input3;
+
+    private void CalculateAverage(List<int> numbers)
+    {
+        var total = 0.0f;
+        foreach (int number in numbers)
+        {
+            total += number;
+        }
+
+        average = total / numbers.Count;
+    }
+}
