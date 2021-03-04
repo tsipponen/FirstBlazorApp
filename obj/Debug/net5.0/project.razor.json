@@ -45,39 +45,6 @@
         }
       },
       {
-        "HashCode": -1706609422,
-        "Kind": "Components.Component",
-        "Name": "FirstBlazorApp.Pages.Counter",
-        "AssemblyName": "FirstBlazorApp",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "Counter"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "FirstBlazorApp.Pages.Counter"
-        }
-      },
-      {
-        "HashCode": 19636039,
-        "Kind": "Components.Component",
-        "Name": "FirstBlazorApp.Pages.Counter",
-        "AssemblyName": "FirstBlazorApp",
-        "CaseSensitive": true,
-        "TagMatchingRules": [
-          {
-            "TagName": "FirstBlazorApp.Pages.Counter"
-          }
-        ],
-        "Metadata": {
-          "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "FirstBlazorApp.Pages.Counter",
-          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
-        }
-      },
-      {
         "HashCode": 524288254,
         "Kind": "Components.Component",
         "Name": "FirstBlazorApp.Pages.Index",
@@ -107,6 +74,39 @@
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
           "Common.TypeName": "FirstBlazorApp.Pages.Index",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": -1706609422,
+        "Kind": "Components.Component",
+        "Name": "FirstBlazorApp.Pages.Counter",
+        "AssemblyName": "FirstBlazorApp",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "Counter"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "FirstBlazorApp.Pages.Counter"
+        }
+      },
+      {
+        "HashCode": 19636039,
+        "Kind": "Components.Component",
+        "Name": "FirstBlazorApp.Pages.Counter",
+        "AssemblyName": "FirstBlazorApp",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "FirstBlazorApp.Pages.Counter"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "FirstBlazorApp.Pages.Counter",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
