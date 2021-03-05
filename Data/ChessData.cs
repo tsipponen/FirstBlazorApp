@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace FirstBlazorApp.Data
 {
@@ -8,9 +9,6 @@ namespace FirstBlazorApp.Data
     {
 
         private readonly IHttpClientFactory _clientFactory;
-        public string Username { get; set; }
-
-        public string Fen { get; set; }
 
         public ChessData(IHttpClientFactory clientFactory)
         {
@@ -18,19 +16,18 @@ namespace FirstBlazorApp.Data
         }
 
 
-        public async Task<string> GetResponse()
+        public async Task<string> GetResponse(string username)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
-            $"https://api.chess.com/pub/player/{Username}/games");
+            $"https://api.chess.com/pub/player/{username}/games");
             request.Headers.Add("Accept", "*/*");
             request.Headers.Add("User-Agent", "HttpClientFactory-Sample");
-            request.Headers.Add("Connection", "keep-alive");
-            //request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Connection", "keep-alive");            
             var client = _clientFactory.CreateClient();
 
             var response = await client.SendAsync(request);
-            Console.WriteLine(response.StatusCode);
-            return "moro";
+            var asd = await response.Content.ReadAsStringAsync();
+            return asd;
         }
     }
 

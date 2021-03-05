@@ -37,7 +37,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        response = await ChessData.GetResponse();
+        response = await ChessData.GetResponse(username);
 
     }
     private void CalculateAverage(List<int> numbers)
