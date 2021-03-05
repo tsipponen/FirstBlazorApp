@@ -20,9 +20,34 @@
         style="transform:scale(0.5);-webkit-transform:scale(0.5);-moz-transform:scale(0.5);border:1px solid black;">
     </iframe></p>
 
-<p>Response: @response</p>
-
-
+@if (games == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Turn</th>
+                <th>Black</th>
+                <th>White</th>
+                <th>Fen</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var game in games)
+{
+    <tr>
+        <td>@game.Turn</td>
+        <td>@game.Black</td>
+        <td>@game.White</td>
+        <td>@game.Fen</td>
+    </tr>
+}
+        </tbody>
+    </table>
+}
 
 
 @code {
@@ -31,13 +56,13 @@
     private static int input2;
     private static int input3;
 
-    private static string response;
+    private static List<Data.ChessDataResponse> games;
 
     private string username = "tinysibs";
 
     protected override async Task OnInitializedAsync()
     {
-        response = await ChessDataService.GetResponse(username);
+        games = await ChessDataService.GetResponse(username);
 
     }
     private void CalculateAverage(List<int> numbers)

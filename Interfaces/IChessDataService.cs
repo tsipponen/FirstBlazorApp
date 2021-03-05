@@ -1,6 +1,8 @@
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using FirstBlazorApp.Data;
 
 public interface IChessDataService
 {
-    public Task<string> GetResponse(string username);
+    public Task<List<ChessDataResponse>> GetResponse(string username);
 }

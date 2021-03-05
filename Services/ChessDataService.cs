@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace FirstBlazorApp.Data
 {
@@ -18,7 +19,7 @@ namespace FirstBlazorApp.Data
         }
 
 
-        public async Task<string> GetResponse(string username)
+        public async Task<List<ChessDataResponse>> GetResponse(string username)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
             $"https://api.chess.com/pub/player/{username}/games");
@@ -31,8 +32,15 @@ namespace FirstBlazorApp.Data
             var responseAsString = await response.Content.ReadAsStringAsync();
             JObject jObj = JObject.Parse(responseAsString);
             IList<JToken> results = jObj["games"].Children().ToList();
+
+            IList<ChessDataResponse> listOfGames = new List<ChessDataResponse>();
+            foreach(JToken result in results)
+            {
+                ChessDataResponse singleGame = result.ToObject<ChessDataResponse>();
+                listOfGames.Add(singleGame);
+            }
             var turn = responseAsString.Where(t => t.Equals("turn")).LastOrDefault();
-            return turn.ToString();
+            return listOfGames.ToList();
         }
     }
 
