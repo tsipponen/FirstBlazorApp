@@ -1,14 +1,12 @@
 @page "/average"
+@inject IChessData ChessData
 
 <h1>Average Calculator</h1>
 
 <p><input @bind="input1" /> Current value: @input1</p>
 <p><input @bind="input2" /> Current value: @input2</p>
 <p><input @bind="input3" /> Current value: @input3</p>
-<iframe width="724" height="724"
-    src="https://www.chess.com/dynboard?fen=2b2rk1/p1pnn1pp/5p2/qBp5/4QN2/1RN5/P4PPP/5RK1%20b%20-%20-%206%2021&board=green&piece=neo&size=3"
-    style="transform:scale(0.35);-webkit-transform:scale(0.35);-moz-transform:scale(0.35);border:1px solid black;">
-</iframe>
+
 @{
     var list = new List<int> { input1, input2, input3 };
 }
@@ -16,6 +14,13 @@
 <p>Average of numbers: @average</p>
 
 <button class=" btn btn-primary" @onclick="() => CalculateAverage(list)">Calculate avg</button>
+
+<p><iframe width="724" height="724"
+        src="https://www.chess.com/dynboard?fen=2b2rk1/p1pnn1pp/5p2/qBp5/4QN2/1RN5/P4PPP/5RK1%20b%20-%20-%206%2021&board=green&piece=neo&size=3"
+        style="transform:scale(0.5);-webkit-transform:scale(0.5);-moz-transform:scale(0.5);border:1px solid black;">
+    </iframe></p>
+
+<p>Response: @response</p>
 
 
 
@@ -26,6 +31,15 @@
     private static int input2;
     private static int input3;
 
+    private static string response;
+
+    private string username = "tinysibs";
+
+    protected override async Task OnInitializedAsync()
+    {
+        response = await ChessData.GetResponse();
+
+    }
     private void CalculateAverage(List<int> numbers)
     {
         var total = 0.0f;
