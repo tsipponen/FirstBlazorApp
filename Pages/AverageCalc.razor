@@ -44,6 +44,12 @@ else
         <td>@game.White</td>
         <td>@game.Fen</td>
     </tr>
+    <iframe 
+                width="724" 
+                height="724"
+                src="https://www.chess.com/dynboard?fen={@game.Fen}board=green&piece=neo&size=3"
+                style="transform:scale(0.5);-webkit-transform:scale(0.5);-moz-transform:scale(0.5);border:1px solid black;">
+            </iframe>
 }
         </tbody>
     </table>
