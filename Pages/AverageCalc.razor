@@ -1,5 +1,5 @@
 @page "/average"
-@inject IChessData ChessData
+@inject IChessDataService ChessDataService
 
 <h1>Average Calculator</h1>
 
@@ -37,7 +37,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        response = await ChessData.GetResponse(username);
+        response = await ChessDataService.GetResponse(username);
 
     }
     private void CalculateAverage(List<int> numbers)
