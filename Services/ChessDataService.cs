@@ -1,10 +1,8 @@
-using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace FirstBlazorApp.Data
 {
@@ -25,7 +23,7 @@ namespace FirstBlazorApp.Data
             $"https://api.chess.com/pub/player/{username}/games");
             request.Headers.Add("Accept", "*/*");
             request.Headers.Add("User-Agent", "HttpClientFactory-Sample");
-            request.Headers.Add("Connection", "keep-alive");            
+            request.Headers.Add("Connection", "keep-alive");
             var client = _clientFactory.CreateClient();
 
             var response = await client.SendAsync(request);
@@ -34,7 +32,7 @@ namespace FirstBlazorApp.Data
             IList<JToken> results = jObj["games"].Children().ToList();
 
             IList<ChessDataResponse> listOfGames = new List<ChessDataResponse>();
-            foreach(JToken result in results)
+            foreach (JToken result in results)
             {
                 ChessDataResponse singleGame = result.ToObject<ChessDataResponse>();
                 listOfGames.Add(singleGame);

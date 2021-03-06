@@ -1,5 +1,3 @@
-using System;
-
 namespace FirstBlazorApp.Data
 {
     public class ChessDataResponse
