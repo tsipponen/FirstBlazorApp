@@ -4,5 +4,5 @@ using FirstBlazorApp.Data;
 
 public interface IChessDataService
 {
-    public Task<List<ChessDataResponse>> GetResponse(string username);
+    public Task<List<ChessData>> GetResponse(string username);
 }

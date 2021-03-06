@@ -17,7 +17,7 @@ namespace FirstBlazorApp.Data
         }
 
 
-        public async Task<List<ChessDataResponse>> GetResponse(string username)
+        public async Task<List<ChessData>> GetResponse(string username)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
             $"https://api.chess.com/pub/player/{username}/games");
@@ -28,17 +28,35 @@ namespace FirstBlazorApp.Data
 
             var response = await client.SendAsync(request);
             var responseAsString = await response.Content.ReadAsStringAsync();
+
+            var listOfModdedData = ParseResponse(responseAsString);
+
+            return listOfModdedData.ToList();
+        }
+
+        private IList<ChessData> ParseResponse(string responseAsString)
+        {
             JObject jObj = JObject.Parse(responseAsString);
             IList<JToken> results = jObj["games"].Children().ToList();
 
             IList<ChessDataResponse> listOfGames = new List<ChessDataResponse>();
+            IList<ChessData> listOfModdedData = new List<ChessData>();
             foreach (JToken result in results)
             {
                 ChessDataResponse singleGame = result.ToObject<ChessDataResponse>();
+                listOfModdedData.Add(
+                    new ChessData
+                    {
+                        Turn = singleGame.Turn,
+                        White = new WhitePlayer { Url = singleGame.White },
+                        Black = new BlackPlayer { Url = singleGame.Black },
+                        Fen = singleGame.Fen
+                    }
+                    );
                 listOfGames.Add(singleGame);
             }
-            var turn = responseAsString.Where(t => t.Equals("turn")).LastOrDefault();
-            return listOfGames.ToList();
+
+            return listOfModdedData;
         }
     }
 
