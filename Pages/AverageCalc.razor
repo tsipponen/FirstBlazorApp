@@ -1,5 +1,4 @@
 @page "/average"
-@inject IChessDataService ChessDataService
 
 <h1>Average Calculator</h1>
 
@@ -15,45 +14,6 @@
 
 <button class=" btn btn-primary" @onclick="() => CalculateAverage(list)">Calculate avg</button>
 
-<p><iframe width="724" height="724"
-        src="https://www.chess.com/dynboard?fen=2b2rk1/p1pnn1pp/5p2/qBp5/4QN2/1RN5/P4PPP/5RK1%20b%20-%20-%206%2021&board=green&piece=neo&size=3"
-        style="transform:scale(0.5);-webkit-transform:scale(0.5);-moz-transform:scale(0.5);border:1px solid black;">
-    </iframe></p>
-
-@if (games == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Turn</th>
-                <th>Black</th>
-                <th>White</th>
-                <th>Fen</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var game in games)
-{
-    <tr>
-        <td>@game.Turn</td>
-        <td>@game.Black</td>
-        <td>@game.White</td>
-        <td>@game.Fen</td>
-    </tr>
-    <iframe 
-                width="724" 
-                height="724"
-                src="https://www.chess.com/dynboard?fen={@game.Fen}board=green&piece=neo&size=3"
-                style="transform:scale(0.5);-webkit-transform:scale(0.5);-moz-transform:scale(0.5);border:1px solid black;">
-            </iframe>
-}
-        </tbody>
-    </table>
-}
 
 
 @code {
@@ -62,15 +22,6 @@ else
     private static int input2;
     private static int input3;
 
-    private static List<Data.ChessDataResponse> games;
-
-    private string username = "tinysibs";
-
-    protected override async Task OnInitializedAsync()
-    {
-        games = await ChessDataService.GetResponse(username);
-
-    }
     private void CalculateAverage(List<int> numbers)
     {
         var total = 0.0f;
