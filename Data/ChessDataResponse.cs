@@ -10,5 +10,7 @@ namespace FirstBlazorApp.Data
         public string White { get; set; }
         public string Black { get; set; }
 
+        public string Name { get; set; }
+
     }
 }
