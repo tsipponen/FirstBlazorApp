@@ -17,10 +17,10 @@ namespace FirstBlazorApp.Data
         }
 
 
-        public async Task<List<ChessData>> GetResponse(string username)
+        public async Task<List<ChessData>> GetResponse(string queriedUsername)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
-            $"https://api.chess.com/pub/player/{username}/games");
+            $"https://api.chess.com/pub/player/{queriedUsername}/games");
             request.Headers.Add("Accept", "*/*");
             request.Headers.Add("User-Agent", "HttpClientFactory-Sample");
             request.Headers.Add("Connection", "keep-alive");
@@ -29,12 +29,12 @@ namespace FirstBlazorApp.Data
             var response = await client.SendAsync(request);
             var responseAsString = await response.Content.ReadAsStringAsync();
 
-            var listOfModdedData = ParseResponse(responseAsString);
+            var listOfModdedData = ParseResponse(responseAsString, queriedUsername);
 
             return listOfModdedData.ToList();
         }
 
-        private IList<ChessData> ParseResponse(string responseAsString)
+        private IList<ChessData> ParseResponse(string responseAsString, string queriedUsername)
         {
             JObject jObj = JObject.Parse(responseAsString);
             IList<JToken> results = jObj["games"].Children().ToList();
@@ -44,12 +44,24 @@ namespace FirstBlazorApp.Data
             foreach (JToken result in results)
             {
                 ChessDataResponse singleGame = result.ToObject<ChessDataResponse>();
+                var whiteName = FetchNameFromUrl(singleGame.White);
+                var blackName = FetchNameFromUrl(singleGame.Black);
                 listOfModdedData.Add(
                     new ChessData
                     {
                         Turn = singleGame.Turn,
-                        White = new WhitePlayer { Url = singleGame.White },
-                        Black = new BlackPlayer { Url = singleGame.Black },
+                        White = new WhitePlayer
+                        {
+                            Url = singleGame.White,
+                            Name = whiteName,
+                            IsQueriedPlayer = IsQueriedPlayer(whiteName, queriedUsername)
+                        },
+                        Black = new BlackPlayer
+                        {
+                            Url = singleGame.Black,
+                            Name = blackName,
+                            IsQueriedPlayer = IsQueriedPlayer(blackName, queriedUsername)
+                        },
                         Fen = singleGame.Fen
                     }
                     );
@@ -57,6 +69,24 @@ namespace FirstBlazorApp.Data
             }
 
             return listOfModdedData;
+        }
+
+        private string FetchNameFromUrl(string url)
+        {
+            string[] splitUrl = url.Split("/");
+            return splitUrl[splitUrl.Length - 1];
+        }
+
+        public bool IsQueriedPlayer(string name, string queriedUsername)
+        {
+            if (name.ToLower().Trim().Equals(queriedUsername.ToLower().Trim()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 

@@ -18,14 +18,33 @@ else
                     <tr>
                         <td>Turn: @game.Turn</td>
                     </tr>
-                    <tr>
-                        <td>White player URL: @game.White.Url</td>
-                    </tr>
-                    <tr>
-                        <td>Black player URL: @game.Black.Url</td>
-                    </tr>
-                    <img src="https://www.chess.com/dynboard?fen={@game.Fen}board=green&piece=neo&size=3"
+                    @if(@game.Black.IsQueriedPlayer){
+                        <tr>
+                            <td>White player name: <b>@game.White.Name</b></td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>Black player name: <b>@game.Black.Name</b></td>
+                        </tr>
+                    }
+                    
+                    <img src="https://www.chess.com/dynboard?fen={@game.Fen}board=green&piece=neo&size=3&flip={@game.Black.IsQueriedPlayer}"
                         style="border:1px solid black; width: 300px; height: 300px;" />
+                    @if(@game.White.IsQueriedPlayer){
+                       
+                        <tr>
+                            <td>White player name: <b>@game.White.Name</b></td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>Black player name: <b>@game.Black.Name</b></td>
+                        </tr>
+                    }
+                    
                 </table>
             }
         </tbody>
