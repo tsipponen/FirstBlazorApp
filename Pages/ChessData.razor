@@ -14,11 +14,13 @@ else
         <tbody>
             @foreach (var game in games)
             {
+                ToggleFlipData(game.Black.IsQueriedPlayer);
                 <table class="customTiny">
                     <tr>
                         <td>Turn: @game.Turn</td>
                     </tr>
-                    @if(@game.Black.IsQueriedPlayer){
+                    @if (@game.Black.IsQueriedPlayer)
+                    {
                         <tr>
                             <td>White player name: <b>@game.White.Name</b></td>
                         </tr>
@@ -29,11 +31,11 @@ else
                             <td>Black player name: <b>@game.Black.Name</b></td>
                         </tr>
                     }
-                    
-                    <img src="https://www.chess.com/dynboard?fen={@game.Fen}board=green&piece=neo&size=3&flip={@game.Black.IsQueriedPlayer}"
+
+                    <img src="https://www.chess.com/dynboard?fen=@game.Fen&board=glass&piece=neo&size=3&flip=@flipData"
                         style="border:1px solid black; width: 300px; height: 300px;" />
-                    @if(@game.White.IsQueriedPlayer){
-                       
+                    @if (@game.White.IsQueriedPlayer)
+                    {
                         <tr>
                             <td>White player name: <b>@game.White.Name</b></td>
                         </tr>
@@ -44,7 +46,7 @@ else
                             <td>Black player name: <b>@game.Black.Name</b></td>
                         </tr>
                     }
-                    
+
                 </table>
             }
         </tbody>
@@ -55,11 +57,24 @@ else
 @code {
     private static List<Data.ChessData> games;
 
+    private int flipData = 0;
+
     private string username = "tinysibs";
 
     protected override async Task OnInitializedAsync()
     {
         games = await ChessDataService.GetResponse(username);
+    }
 
+    private void ToggleFlipData(bool isQueriedPlayer)
+    {
+        if (isQueriedPlayer)
+        {
+            flipData = 1;
+        }
+        else
+        {
+            flipData = 0;
+        }
     }
 }
