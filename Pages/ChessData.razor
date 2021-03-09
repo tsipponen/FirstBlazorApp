@@ -10,7 +10,16 @@
 }
 else
 {
-    <table class="customTiny">
+    <p>Enter a player you want to search from Chess.com (default: tinysibs)</p>
+    <p>
+        <input class="input" @bind="queriedPlayer"/>
+    </p>
+
+        <button @onclick="SearchChessData">
+            Search!
+        </button>
+
+    <table class="chess-table">
         <tbody>
             @foreach (var game in games)
             {
@@ -53,13 +62,13 @@ else
     </table>
 }
 
-
 @code {
     private static List<Data.ChessData> games;
 
     private int flipData = 0;
 
     private string username = "tinysibs";
+    private string queriedPlayer = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -76,5 +85,10 @@ else
         {
             flipData = 0;
         }
+    }
+
+    private async Task SearchChessData()
+    {
+        games = await ChessDataService.GetResponse(queriedPlayer);
     }
 }
